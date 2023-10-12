@@ -1,9 +1,8 @@
-import pyautogui
 import win32gui
 import time
 import keyboard
-import action
 
+import action
 
 
 def main():
@@ -26,14 +25,14 @@ def main():
                 time.sleep(5)
                 action.deplacement(397, 407, 526, 475)
                 #Place le sort a 6 PA
-                action.sort_6pa("Images\sort6pa.png",(605, 431), (648, 451))
+                action.sort_6pa("Images\Sort6pa",(605, 431), (648, 451))
 
                 #Passe sont tour
                 keyboard.press_and_release('space')
                 time.sleep(15)
 
                 # Si le sort Fureur est présent alors il ce le met | Premier paterne !
-                if action.sort("Images/boost.png",526,475) :
+                if action.sort_boost("Images/fureur.png", 516,475) :
                     time.sleep(2)
                     # Ce déplacement sur le mob pour le taper
                     action.deplacement(532, 471,645, 406)
@@ -42,13 +41,13 @@ def main():
                     action.deplacement(616, 420,658, 453)
                     time.sleep(1)
                     # Place le piege 2 PA
-                    action.sort("Images\sort2pa.png", 772,387)
+                    action.sort("Images\Sort2pa", 772,387)
                     time.sleep(1)
                     # Ce deplace sur le piege a 2 PA
                     action.deplacement(649, 455,772, 388)
                     time.sleep(1)
                     # Place le piege 2 PA
-                    action.sort("Images\sort2pa.png", 738,373)
+                    action.sort("Images\Sort2pa", 738,373)
                     time.sleep(1)
                     # Ce deplace sur le piege a 2 PA
                     action.deplacement(772, 388,738,373)
@@ -65,4 +64,5 @@ def main():
 
 if __name__ == '__main__':
     while True:
+         time.sleep(3)
          main()
