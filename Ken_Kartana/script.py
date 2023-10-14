@@ -1,11 +1,4 @@
-import pyautogui
-import win32gui
-import time
 from ahk import AHK
-import cv2
-import numpy as np
-import os
-    
     
 def hold_click(duration_ms):
     #ahk = AHK(executable_path='C:\\Program Files\\AutoHotkey\\v1.1.37.01\\AutoHotkeyA32.exe')

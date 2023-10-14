@@ -3,16 +3,13 @@ import win32gui
 import time
 import os
 
-from ahk import AHK
-
-
 import locate_image
 import script
 
-SEARCH_REGION = (398, 653, 585, 95)
+
+
 # Obtient le handle de la fenêtre du jeu (remplacez "NomDuJeu" par le nom de la fenêtre du jeu)
 game_window = win32gui.FindWindow(None, "Waven")
-
 
 # Vérifie si la souris est à l'intérieur de la fenêtre du jeu
 rect = win32gui.GetWindowRect(game_window)
@@ -39,111 +36,71 @@ def move_mouse_to_image(image_path):
         print(f"Image {image_path} non trouvée.")
         return False
 
+def sort_6pa(directory_path, clic_x, clic_y):
+    image_paths = [os.path.join(directory_path, file) for file in os.listdir(directory_path)]
+    game_window_coordinates = locate_image.get_game_window_coordinates("Waven")
+    
+    if not game_window_coordinates[0]:  # check if the first value is None
+        print("Fenêtre de jeu non trouvée.")
+        return False
+
+    detected_image_info = locate_image.detection_images(image_paths, (497, 813, 615, 117), game_window_coordinates)
+
+    if detected_image_info:
+        image, location = detected_image_info
+        center_x, center_y, width, height = location.left + location.width // 2, location.top + location.height // 2, location.width, location.height
+
+        pyautogui.moveTo(center_x, center_y)
+        time.sleep(2)
+        script.simple_click()
+        time.sleep(1)
+        script.simple_click()
+
+        # Déplace la souris à la coordonnée souhaitée et effectue un clic gauche
+        pyautogui.moveTo(x=game_window_coordinates[0] + clic_x[0], y=game_window_coordinates[1] + clic_x[1],)
+        time.sleep(1)
+        script.simple_click()
+
+        # Déplace la souris à la coordonnée souhaitée et effectue un clic gauche
+        pyautogui.moveTo(x=game_window_coordinates[0] + clic_y[0], y=game_window_coordinates[1] + clic_y[1],)
+        time.sleep(1)
+        script.simple_click()
+
+        return True
+
+    else:
+        print("Aucune image détectée.")
+        return False
 
 def sort(directory_path, clic_x, clic_y):
-    # Tente de localiser une des images sur l'écran
-    location, image_path = locate_image.locate_images_in_directory(directory_path, "Waven")
-
-    #location, image_path = locate_images_in_directory(directory_path, "Waven")
-
-    # Obtient les coordonnées de la fenêtre du jeu
-    rect = locate_image.get_game_window_rect("Waven")
-    if not rect:
+    image_paths = [os.path.join(directory_path, file) for file in os.listdir(directory_path)]
+    game_window_coordinates = locate_image.get_game_window_coordinates("Waven")
+    
+    if not game_window_coordinates[0]:  # check if the first value is None
         print("Fenêtre de jeu non trouvée.")
         return False
 
-    if location is not None:
-        # Récupère les coordonnées du centre de l'image
-        x, y, width, height = location
-        center_x = x + width // 2
-        center_y = y + height // 2
+    detected_image_info = locate_image.detection_images(image_paths, (497, 813, 615, 117), game_window_coordinates)
 
-        # Déplace la souris sur le centre de l'image
-        pyautogui.moveTo(center_x, center_y,)
+    if detected_image_info:
+        image, location = detected_image_info
+        center_x, center_y, width, height = location.left + location.width // 2, location.top + location.height // 2, location.width, location.height
+
+        pyautogui.moveTo(center_x, center_y)
         time.sleep(2)
         script.simple_click()
         time.sleep(1)
         script.simple_click()
 
         # Déplace la souris à la coordonnée souhaitée et effectue un clic gauche
-        pyautogui.moveTo(x=rect[0] + clic_x, y=rect[1] + clic_y,)
+        pyautogui.moveTo(x=game_window_coordinates[0] + clic_x, y=game_window_coordinates[1] + clic_y,)
         time.sleep(1)
         script.simple_click()
 
         return True
+
     else:
-        print(f"Image {image_path} non trouvée.")
-        return False
-
-def sort_boost(image_path, clic_x, clic_y):
-    # Tente de localiser l'image sur l'écran
-    location = locate_image.locate_image_on_screen(image_path, "Waven")
-    
-    # Obtient les coordonnées de la fenêtre du jeu
-    rect = locate_image.get_game_window_rect("Waven")
-    if not rect:
-        print("Fenêtre de jeu non trouvée.")
-        return False
-
-    if location is not None:
-        # Récupère les coordonnées du centre de l'image
-        x, y, width, height = location
-        center_x = x + width // 2
-        center_y = y + height // 2
-
-        # Déplace la souris sur le centre de l'image
-        pyautogui.moveTo(center_x, center_y,)
-        time.sleep(2)
-        script.simple_click()
-        time.sleep(1)
-        script.simple_click()
-
-        # Déplace la souris à la coordonnée souhaitée et effectue un clic gauche
-        pyautogui.moveTo(x=rect[0] + clic_x, y=rect[1] + clic_y,)
-        time.sleep(1)
-        script.simple_click()
-
-        return True
-    else:
-        print(f"Image {image_path} non trouvée.")
-        return False
-
-def sort_6pa(directory_path, click1_coords, click2_coords):
-    # Tente de localiser l'image sur l'écran
-    location, image_path = locate_image.locate_images_in_directory(directory_path, "Waven")
-    #location = pyautogui.locateOnScreen(image_path, confidence=0.8, minSearchTime=2)
-    
-    # Obtient les coordonnées de la fenêtre du jeu
-    rect = locate_image.get_game_window_rect("Waven")
-    if not rect:
-        print("Fenêtre de jeu non trouvée.")
-        return False
-
-    if location is not None:
-        # Récupère les coordonnées du centre de l'image
-        x, y, width, height = location
-        center_x = x + width // 2
-        center_y = y + height // 2
-
-        # Déplace la souris sur le centre de l'image et effectue des clics
-        pyautogui.moveTo(center_x, center_y,)
-        time.sleep(2)
-        script.simple_click()  # simule un clic simple
-        time.sleep(1)
-        script.simple_click()  # simule un autre clic simple
-
-        # Déplace la souris à la première position spécifiée et effectue un clic
-        pyautogui.moveTo(x=rect[0] + click1_coords[0], y=rect[1] + click1_coords[1],)
-        time.sleep(1)
-
-        # Déplace la souris à la seconde position spécifiée et effectue un clic
-        pyautogui.moveTo(x=rect[0] + click2_coords[0], y=rect[1] + click2_coords[1],)
-        script.simple_click()
-        time.sleep(1)
-
-        return True
-    else:
-        print(f"Images dans {directory_path} non trouvées.")
+        print("Aucune image détectée.")
         return False
 
 def deplacement(start_x, start_y, end_x, end_y):
@@ -191,8 +148,7 @@ def click_coor(clic_x, clic_y):
             
             script.simple_click()
 
-
 def abandonner():
-    click_coor(31,729)
-    click_coor(150,650)
-    click_coor(615,415)
+    click_coor(32, 902)
+    click_coor(177, 817)
+    click_coor(745, 508)
