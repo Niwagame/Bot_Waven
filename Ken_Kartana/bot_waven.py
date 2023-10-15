@@ -1,6 +1,7 @@
 import win32gui
 import time
 import keyboard
+import script
 
 import action
 
@@ -35,13 +36,13 @@ def main():
                 time.sleep(5)
                 action.deplacement(484, 503, 646, 586)
                 #Place le sort a 6 PA
-                if action.sort_6pa("sort/6pa",(758, 533), (797, 560)):
+                if action.sort_6pa("Images/sort/6pa",(758, 533), (797, 560)):
                     #Passe sont tour
                     keyboard.press_and_release('space')
                     time.sleep(15)
 
                     # Si le sort Fureur est présent alors il ce le met | Premier paterne !
-                    if action.sort("sort/fureur", 648, 582) :
+                    if action.sort("Images/sort/fureur", 648, 582) :
                         time.sleep(2)
                         # Ce déplacement sur le mob pour le taper
                         action.deplacement(648, 582,800, 504)
@@ -50,13 +51,13 @@ def main():
                         action.deplacement(751, 521,810, 554)
                         time.sleep(1)
                         # Place le piege 2 PA
-                        if action.sort("sort/2pa", 946, 483) :
+                        if action.sort("Images/sort/2pa", 946, 483) :
                             time.sleep(1)
                             # Ce deplace sur le piege a 2 PA
                             action.deplacement(815, 556,966, 476)
                             time.sleep(1)
                             # Place le piege 2 PA
-                            if action.sort("sort/2pa", 916, 451) :
+                            if action.sort("Images/sort/2pa", 916, 451) :
                                 time.sleep(1)
                                 # Ce deplace sur le piege a 2 PA
                                 action.deplacement(970, 482,912, 450)
