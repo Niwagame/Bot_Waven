@@ -1,5 +1,6 @@
 import pyautogui
 import win32gui
+import os
 
 from typing import List, Tuple, Union
 
@@ -20,9 +21,61 @@ def detection_images(image_paths: List[str], region: Tuple[int, int, int, int], 
 
     for image_path in image_paths:
         location = pyautogui.locateOnScreen(image_path, step=5, region=absolute_region, confidence=0.97, minSearchTime=2)
-        print(f"Location for {image_path}:", location)
+        #print(f"Location for {image_path}:", location)
         if location is not None:
-            print(f"Image {image_path} trouvée.")
+            #print(f"Image {image_path} trouvée.")
             return image_path, location  # Retournez l'image et sa localisation
-    print("Aucune image détectée.")
+    #print("Aucune image détectée.")
     return None  # Renvoyez None si aucune image n'est trouvée
+
+
+def detection_images_single(image_path: List[str], region: Tuple[int, int, int, int], game_window_coordinates) -> Union[None, Tuple[str, Tuple[int, int, int, int]]]:
+    absolute_region = (
+        game_window_coordinates[0] + region[0],
+        game_window_coordinates[1] + region[1],
+        region[2],
+        region[3]
+    )
+    location = pyautogui.locateOnScreen(image_path, step=5, region=absolute_region, confidence=0.97, minSearchTime=2)
+    #print(f"Location for {image_path}:", location)
+    if location is not None:
+        #print(f"Image {image_path} trouvée.")
+        return image_path, location  # Retournez l'image et sa localisation
+    #print("Aucune image détectée.")
+    return None  # Renvoyez None si aucune image n'est trouvée
+
+
+def detection_mob(image_path: List[str], region: Tuple[int, int, int, int], game_window_coordinates) -> Union[None, Tuple[str, Tuple[int, int, int, int]]]:
+    absolute_region = (
+        game_window_coordinates[0] + region[0],
+        game_window_coordinates[1] + region[1],
+        region[2],
+        region[3]
+    )
+    location = pyautogui.locateOnScreen(image_path, step=5, region=absolute_region, confidence=0.5, minSearchTime=2)
+    # print(f"Location for {image_path}:", location)
+    if location is not None:
+        # print(f"Image {image_path} trouvée.")
+        return image_path, location  # Retournez l'image et sa localisation
+    # print("Aucune image détectée.")
+    return None  # Renvoyez None si aucune image n'est trouvée
+
+def detection_images_count(directory_path: str, region: Tuple[int, int, int, int], game_window_coordinates) -> int:
+    image_paths = [os.path.join(directory_path, file) for file in os.listdir(directory_path)]
+    
+    absolute_region = (
+        game_window_coordinates[0] + region[0],
+        game_window_coordinates[1] + region[1],
+        region[2],
+        region[3]
+    )
+    
+    detected_images_count = 0
+
+    for image_path in image_paths:
+        location = pyautogui.locateOnScreen(image_path, step=5, region=absolute_region, confidence=0.97, minSearchTime=2)
+        if location is not None:
+            detected_images_count += 1
+    
+    return detected_images_count
+
