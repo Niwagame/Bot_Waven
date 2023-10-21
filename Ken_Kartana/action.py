@@ -6,6 +6,9 @@ import os
 import locate_image
 import script
 
+#pyinstaller --onefile bot_waven.py --add-data "Images/*;Images" --add-data "Script/*;Script" --add-data ".vs\Lib\site-packages\ahk\templates;ahk/templates" --distpath ./output --hidden-import script
+
+
 
 
 # Obtient le handle de la fenêtre du jeu (remplacez "NomDuJeu" par le nom de la fenêtre du jeu)

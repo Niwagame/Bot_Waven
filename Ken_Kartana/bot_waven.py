@@ -2,7 +2,7 @@ import win32gui
 import time
 import keyboard
 
-
+import script
 import action
 import locate_image
 
@@ -10,7 +10,8 @@ nb_combat = 0
 nb_combat_failed = 0
 nb_combat_win = 0
 
-#Images dans sort//6pa non trouvées.
+#pyinstaller --onefile bot_waven.py --add-data "Images/*;Images" --add-data "Script/*;Script" --distpath ./output --hidden-import script
+
 def suite():
     global nb_combat 
     global nb_combat_failed
