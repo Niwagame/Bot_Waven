@@ -1,0 +1,3 @@
+#Persistent
+MouseClick, right
+ExitApp

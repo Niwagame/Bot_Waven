@@ -205,7 +205,7 @@ def deplacement_2step(start_x, start_y, end_x, end_y, mid_x=None, mid_y=None):
     # Relâche le clic gauche
     pyautogui.mouseUp()
 
-def click_coor(clic_x, clic_y):
+def click_coor(clic_x, clic_y,right=False):
 
         if (0 <= clic_x < rect[2] - rect[0]) and (0 <= clic_y < rect[3] - rect[1]):
             # Attend un court délai avant le clic
@@ -214,9 +214,13 @@ def click_coor(clic_x, clic_y):
             # Déplace la souris à la coordonnée souhaitée et effectue un clic gauche
             pyautogui.click(x=rect[0] + clic_x, y=rect[1] + clic_y,)
             
-            script.simple_click()
+            script.simple_click(right=right)
 
 def abandonner():
     click_coor(32, 902)
     click_coor(177, 817)
     click_coor(745, 508)
+
+def exit_dj():
+    click_coor(348, 877)
+    click_coor(184, 813)

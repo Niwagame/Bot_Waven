@@ -160,6 +160,8 @@ def main():
                         action.sort("Images/sort/2pa", 797, 560)
                         time.sleep(2)
                         suite()
+    else:
+        keyboard.press_and_release('esc')
 
 
 if __name__ == '__main__':

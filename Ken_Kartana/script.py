@@ -14,10 +14,13 @@ def hold_click(duration_ms):
     
     ahk.run_script(script, blocking=False)
 
-def simple_click():
+def simple_click(right=False):
     ahk = AHK(executable_path=EXECUTABLE_PATH)
     
-    with open("Script/simple_click.ahk", "r") as file:
+    # Choix du script en fonction de la valeur de `right`
+    script_file = "Script/simple_click_right.ahk" if right else "Script/simple_click.ahk"
+    
+    with open(script_file, "r") as file:
         script = file.read()
     
     ahk.run_script(script, blocking=False)
